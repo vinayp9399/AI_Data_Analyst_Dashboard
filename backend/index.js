@@ -9,6 +9,7 @@ app.use(cors())
 app.use(bodyParser.json())
 
 app.use('/file', require('./routes/fileuploadroute'))
+app.use('/data', require('./routes/fileuploadroute'))
 
 app.get('/', (req, res)=>{
    res.json({name:"AI Data Analyst Dashboard Backend"})

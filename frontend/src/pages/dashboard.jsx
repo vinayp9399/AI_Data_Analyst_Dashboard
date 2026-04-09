@@ -9,7 +9,16 @@ function Dashboard() {
   return (
     <>
     <Navbar/>
-    <div class="m-5 flex">
+
+    <div class="relative h-100 w-full bg-[url('https://img.freepik.com/free-photo/office-supplies-table_1098-3457.jpg?semt=ais_incoming&w=740&q=80')] bg-cover bg-center flex items-center justify-center">
+  <div class="absolute inset-0 bg-black/60"></div>
+  <div class="relative w-full max-w-md px-4">
+    <input type="text" placeholder="Search..." class="w-full py-3 px-4 rounded-lg bg-white shadow-lg focus:outline-none" />
+    <button class="absolute right-6 top-1/2 -translate-y-1/2 bg-blue-600 text-white px-4 py-1 rounded">Analyse</button>
+  </div>
+</div>
+
+    {/* <div class="m-5 flex">
       <div style={{width: '500px', height: '300px'}}>
       <LineChart/>
       </div>
@@ -22,7 +31,7 @@ function Dashboard() {
     </div>
     <div class="m-5">
       <HorizontalBarChart/>
-    </div>
+    </div> */}
     </>
   )
 }

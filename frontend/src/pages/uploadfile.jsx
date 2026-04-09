@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import Navbar from '../components/navbar';
 import axios from 'axios';
 import Papa from 'papaparse';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function Uploadfile() {
   const [file, setFile] = useState(null);
@@ -9,6 +10,8 @@ function Uploadfile() {
   const [status, setStatus] = useState("");
   const [data, setData] = useState([]);
   const [columns, setColumns] = useState([]);
+
+  const navigate = useNavigate()
   
   const fileInputRef = useRef(null);
 
@@ -21,17 +24,27 @@ function Uploadfile() {
     setStatus(`Selected: ${selectedFile.name}`);
 
     // 2. IMPORTANT: Parse the local 'selectedFile' directly, NOT 'file' state
-    Papa.parse(selectedFile, {
-      header: true,
-      skipEmptyLines: true,
-      complete: function (results) {
-        if (results.data.length > 0) {
-          setColumns(Object.keys(results.data[0]));
-          setData(results.data);
-        }
-      },
-    });
+    // Papa.parse(selectedFile, {
+    //   header: true,
+    //   skipEmptyLines: true,
+    //   complete: function (results) {
+    //     if (results.data.length > 0) {
+    //       setColumns(Object.keys(results.data[0]));
+    //       setData(results.data);
+    //     }
+    //   },
+    // });
+
+
   };
+
+  const handleshowData=()=>{
+     axios.get('http://localhost:5000/file/getfile').then((res)=>{
+       console.log(res.data)
+        setColumns(res.data.columns);
+        setData(res.data.data);
+     })
+  }
 
   const handleUpload = async () => {
     if (!file) return alert("Please select a file first!");
@@ -116,6 +129,23 @@ function Uploadfile() {
           
           <p className="mt-4 text-xs font-semibold text-blue-600 uppercase">{status}</p>
         </div>
+      </div>
+
+      <div class='flex items-center justify-center gap-10 mb-5'>
+        <button 
+                type="button" 
+                onClick={()=>{handleshowData()}} 
+                className="px-4 py-2 rounded text-sm text-white bg-blue-700"
+              >
+                Show CSV Data
+              </button>
+        <button 
+                type="button" 
+                onClick={()=>{navigate('/dashboard')}}
+                className="px-4 py-2 rounded text-sm text-white bg-blue-700"
+              >
+                Go to Analysis Dashboard
+              </button>
       </div>
 
       {/* Optimized Preview Table */}
