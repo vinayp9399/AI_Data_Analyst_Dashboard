@@ -20,13 +20,13 @@ ChartJS.register(
   Legend
 );
 
-const BarChart = () => {
+const BarChart = (props) => {
   const data = {
-    labels: ['January', 'February', 'March', 'April'],
+    labels: props.labels,
     datasets: [
       {
-        label: 'Sales 2026',
-        data: [12, 19, 3, 5],
+        label: props.valueDescription,
+        data: props.values,
         backgroundColor: 'rgba(75, 192, 192, 0.5)',
       },
     ],
@@ -36,7 +36,7 @@ const BarChart = () => {
     responsive: true,
     plugins: {
       legend: { position: 'top' },
-      title: { display: true, text: 'Monthly Revenue' },
+      title: { display: true, text: props.title },
     },
     responsive: true,
   maintainAspectRatio: true, 

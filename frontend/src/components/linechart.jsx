@@ -22,13 +22,13 @@ ChartJS.register(
   Legend
 );
 
-const LineChart = () => {
+const LineChart = (props) => {
   const data = {
-    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    labels: props.labels,
     datasets: [
       {
-        label: 'User Activity',
-        data: [65, 59, 80, 81, 56, 55, 40],
+        label: props.valueDescription,
+        data: props.values,
         fill: false, // Set to true if you want an Area Chart
         borderColor: 'rgb(75, 192, 192)',
         tension: 0.3, // Adds a slight curve to the line

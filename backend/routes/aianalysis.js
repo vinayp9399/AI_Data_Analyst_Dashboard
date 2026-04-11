@@ -50,9 +50,11 @@ const model = genAI.getGenerativeModel({
       Data from ${firstFileName}: ${dataSummary}
 
       Return a JSON object with exactly these keys:
-      1. "chartData": Array of {label, value} for a ${req.body.charttype} chart.
-      2. "valueDescription": A short string explaining what the 'value' represents.
-      3. "analysis": A summary of the findings.
+      1. "labels": Array of label for a chart.
+      2. "values": Array of values for a chart.
+      3. "valueDescription": A short string explaining what the 'value' represents.
+      4. "analysis": A summary of the findings.
+      5. "title": A short title for the chart
     `;
 
     const result = await model.generateContent(prompt);

@@ -14,11 +14,28 @@ const [columns, setColumns] = useState([]);
 const [tab, settab] = useState('csv')
 const [userquery, setuserquery] = useState('')
 const [chartoption, setchartoption] = useState('')
+const [aidataAvailable, setaidataAvailable] = useState(false)
+
+const [values, setvalues] = useState([])
+const [labels, setlabels] = useState([])
+const [valueDescription, setvalueDescription] = useState('')
+const [title, settitle] = useState('')
+const [analysis, setanalysis] = useState('')
+const [isloading, setisloading] = useState(false)
+
+
 
 const analyseData = ()=>{
+  setisloading(true)
   axios.post('http://localhost:5000/data/analysis', {userquery:userquery, charttype:chartoption}).then((res)=>{
      console.log(res.data)
-
+     setvalues(res.data.analysis.values)
+     setlabels(res.data.analysis.labels)
+     setvalueDescription(res.data.analysis.valueDescription)
+     settitle(res.data.analysis.title)
+     setanalysis(res.data.analysis.analysis)
+     setaidataAvailable(true)
+       setisloading(false)
   })
 }
 
@@ -142,26 +159,54 @@ useEffect(()=>{
       </button>
     </div>
 
+    {isloading===true && aidataAvailable===false && <>
+    <div class="col-span-2 w-full mx-auto shadow-sm border border-gray-100 rounded p-4">
+  <div class="flex animate-pulse space-x-4">
+    <div class="flex-1 size-80 bg-gray-300"></div>
+    <div class="flex-1 space-y-6 py-1">
+      <div class="h-3 rounded bg-gray-300"></div>
+      <div class="h-3 rounded bg-gray-300"></div>
+      <div class="h-3 rounded bg-gray-300"></div>
+      <div class="h-3 rounded bg-gray-300"></div>
+      <div class="h-3 rounded bg-gray-300"></div>
+      <div class="h-3 rounded bg-gray-300"></div>
+      <div class="h-3 rounded bg-gray-300"></div>
+      <div class="h-3 rounded bg-gray-300"></div>
+      <div class="h-3 rounded bg-gray-300"></div>
+    </div>
+  </div>
+</div>
+    </>}
+
+    {aidataAvailable===false && isloading===false && <>
+    <div className="col-span-2 w-full bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[300px] flex items-center justify-center text-gray-500 text-center">
+      <p className="italic">Analysis details will appear here...</p>
+    </div>
+    </>}
+    
+    
+    {aidataAvailable===true && isloading===false && <>
     {/* Bottom Left: Chart */}
     <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[300px]">
       <div className="w-full h-full flex items-center justify-center">
         {chartoption==='Bar' && <>
-        <BarChart />
+        <BarChart labels={labels} values={values} valueDescription={valueDescription} title={title}/>
         </>}
         {chartoption==='Line' && <>
-        <LineChart/>
+        <LineChart labels={labels} values={values} valueDescription={valueDescription} title={title}/>
         </>}
         {chartoption==='Circle' && <>
-        <PieChart/>
+        <PieChart labels={labels} values={values} valueDescription={valueDescription} title={title}/>
         </>}
       </div>
     </div>
 
     {/* Bottom Right: Content */}
-    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[300px] flex items-center justify-center text-gray-500 text-center">
-      <p className="italic">Analysis details will appear here...</p>
+    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[300px] flex items-center justify-center text-black text-center">
+      <p className="italic">{analysis}</p>
     </div>
-
+    </>}
+    
   </div>
 </div>
         </>

@@ -5,13 +5,13 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 // Register the specific elements needed for Pie/Doughnut charts
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const PieChart = () => {
+const PieChart = (props) => {
   const data = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green'],
+    labels: props.labels,
     datasets: [
       {
-        label: 'Votes',
-        data: [12, 19, 3, 5],
+        label: props.title,
+        data: props.values,
         backgroundColor: [
           'rgba(255, 99, 132, 0.6)',
           'rgba(54, 162, 235, 0.6)',
