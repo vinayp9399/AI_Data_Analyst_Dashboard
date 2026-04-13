@@ -18,9 +18,10 @@ const [aidataAvailable, setaidataAvailable] = useState(false)
 
 const [values, setvalues] = useState([])
 const [labels, setlabels] = useState([])
+const [specificanalysis, setspecificanalysis] = useState({})
 const [valueDescription, setvalueDescription] = useState('')
 const [title, settitle] = useState('')
-const [analysis, setanalysis] = useState('')
+const [overallanalysis, setoverallanalysis] = useState('')
 const [isloading, setisloading] = useState(false)
 
 
@@ -33,7 +34,8 @@ const analyseData = ()=>{
      setlabels(res.data.analysis.labels)
      setvalueDescription(res.data.analysis.valueDescription)
      settitle(res.data.analysis.title)
-     setanalysis(res.data.analysis.analysis)
+     setoverallanalysis(res.data.analysis.overallanalysis)
+     setspecificanalysis(res.data.analysis.specificanalysis)
      setaidataAvailable(true)
        setisloading(false)
   })
@@ -119,10 +121,10 @@ useEffect(()=>{
         <>
         <div className="px-10 pb-20">
   {/* Main Grid Container */}
-  <div className="grid grid-cols-2 gap-6 items-start shadow-md sm:rounded-lg border border-gray-200 p-6 bg-gray-50">
+  <div className="grid grid-cols-3 gap-6 items-start shadow-md sm:rounded-lg border border-gray-200 p-6 bg-gray-50">
     
     {/* Top Section: Inputs and Full-Width Button */}
-    <div className="col-span-2 flex flex-col gap-4 w-full">
+    <div className="col-span-3 flex flex-col gap-4 w-full">
       
       {/* Inputs Row */}
       <div className="flex flex-col md:flex-row gap-4 w-full">
@@ -160,7 +162,7 @@ useEffect(()=>{
     </div>
 
     {isloading===true && aidataAvailable===false && <>
-    <div class="col-span-2 w-full mx-auto shadow-sm border border-gray-100 rounded p-4">
+    <div class="col-span-3 w-full mx-auto shadow-sm border border-gray-100 rounded p-4">
   <div class="flex animate-pulse space-x-4">
     <div class="flex-1 size-80 bg-gray-300"></div>
     <div class="flex-1 space-y-6 py-1">
@@ -179,15 +181,34 @@ useEffect(()=>{
     </>}
 
     {aidataAvailable===false && isloading===false && <>
-    <div className="col-span-2 w-full bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[300px] flex items-center justify-center text-gray-500 text-center">
+    <div className="col-span-3 w-full bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[300px] flex items-center justify-center text-gray-500 text-center">
       <p className="italic">Analysis details will appear here...</p>
     </div>
     </>}
     
     
     {aidataAvailable===true && isloading===false && <>
+
+    <div className=" bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[200px]">
+      <div className="w-full min-h-[150px] flex flex-col items-center justify-center gap-5">
+        <p className='text-[50px] font-bold text-green-500'>{specificanalysis.analysis1.numberinsight}</p>
+        <p>{specificanalysis.analysis1.one_short_positive_detail}</p>
+      </div>
+    </div>
+    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[200px]">
+      <div className="w-full min-h-[150px] flex flex-col items-center justify-center gap-5">
+        <p className='text-[50px] font-bold text-red-500'>{specificanalysis.analysis2.numberinsight}</p>
+        <p>{specificanalysis.analysis2.one_short_negetive_detail}</p>
+      </div>
+    </div>
+    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[200px]">
+      <div className="w-full min-h-[150px] flex flex-col items-center justify-center gap-5">
+        <p className='text-[50px] font-bold text-blue-500'>{specificanalysis.analysis3.numberinsight}</p>
+        <p>{specificanalysis.analysis3.one_short_random_detail}</p>
+      </div>
+    </div>
     {/* Bottom Left: Chart */}
-    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[300px]">
+    <div className="col-span-2 bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[300px]">
       <div className="w-full h-full flex items-center justify-center">
         {chartoption==='Bar' && <>
         <BarChart labels={labels} values={values} valueDescription={valueDescription} title={title}/>
@@ -202,8 +223,9 @@ useEffect(()=>{
     </div>
 
     {/* Bottom Right: Content */}
-    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[300px] flex items-center justify-center text-black text-center">
-      <p className="italic">{analysis}</p>
+    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[300px] flex flex-col gap-5 items-center justify-center text-black text-center">
+      <p className='text-[20px] font-bold'>Overall Analysis-</p>
+      <p className="italic">{overallanalysis}</p>
     </div>
     </>}
     

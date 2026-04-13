@@ -44,17 +44,18 @@ const model = genAI.getGenerativeModel({
 });
 
     const prompt = `
-      You are a professional data analyst. 
+      You are a professional data analyst. 
       Analyze the following data based on this query: ${req.body.userquery}.
-      
+
       Data from ${firstFileName}: ${dataSummary}
 
       Return a JSON object with exactly these keys:
       1. "labels": Array of label for a chart.
       2. "values": Array of values for a chart.
       3. "valueDescription": A short string explaining what the 'value' represents.
-      4. "analysis": A summary of the findings.
+      4. "overallanalysis": A summary of the findings.
       5. "title": A short title for the chart
+      6. "specificanalysis": 3 analysis point in json format {analysis1:{numberinsight,one_short_positive_detail}, analysis2:{numberinsight, one_short_negetive_detail}, analysis 3: {numberinsight, one_short_random_detail}}
     `;
 
     const result = await model.generateContent(prompt);
