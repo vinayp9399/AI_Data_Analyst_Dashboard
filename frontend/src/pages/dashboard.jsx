@@ -73,12 +73,12 @@ useEffect(()=>{
       {/* Desktop Tabs (Visible > 640px) */}
       <ul className="hidden text-sm font-medium text-center text-gray-500 sm:flex -space-x-px border border-gray-500 rounded-lg overflow-hidden mt-5 ml-5 mr-5">
         <li className="w-full">
-          <a onClick={()=>{settab('csv')}} className={`inline-block w-full p-4 border-r border-gray-500 hover:text-blue-600 focus:outline-none cursor-pointer ${tab==="csv" ? 'bg-gray-200 text-blue-600' : 'bg-white'}`}>
+          <a onClick={()=>{settab('csv')}} className={`inline-block w-full p-4 border-r border-gray-500 hover:bg-blue-400 hover:text-white focus:outline-none cursor-pointer ${tab==="csv" ? 'bg-blue-700 text-white' : 'bg-white'}`}>
             Input CSV Data
           </a>
         </li>
         <li className="w-full">
-          <a onClick={()=>{settab('analysis')}} className={`inline-block w-full p-4 border-l border-gray-500 hover:text-blue-600 cursor-pointer ${tab==="analysis" ? 'bg-gray-200 text-blue-600' : 'bg-white'}`}>
+          <a onClick={()=>{settab('analysis')}} className={`inline-block w-full p-4 border-l border-gray-500 hover:bg-blue-400 hover:text-white cursor-pointer ${tab==="analysis" ? 'bg-blue-700 text-white' : 'bg-white'}`}>
             Analysis
           </a>
         </li>
@@ -148,7 +148,7 @@ useEffect(()=>{
     <option value="" disabled>Choose Chart Option</option>
     <option value="Line">Line</option>
     <option value="Bar">Bar</option>
-    <option value="Circle">Circle</option>
+    <option value="Circle">Pie</option>
   </select>
 </div>
 
@@ -191,19 +191,19 @@ useEffect(()=>{
 
     <div className=" bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[200px]">
       <div className="w-full min-h-[150px] flex flex-col items-center justify-center gap-5">
-        <p className='text-[50px] font-bold text-green-500'>{specificanalysis.analysis1.numberinsight}</p>
+        <p className='text-[50px] text-green-500'>{specificanalysis.analysis1.numberinsight}</p>
         <p>{specificanalysis.analysis1.one_short_positive_detail}</p>
       </div>
     </div>
     <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[200px]">
       <div className="w-full min-h-[150px] flex flex-col items-center justify-center gap-5">
-        <p className='text-[50px] font-bold text-red-500'>{specificanalysis.analysis2.numberinsight}</p>
+        <p className='text-[50px] text-red-500'>{specificanalysis.analysis2.numberinsight}</p>
         <p>{specificanalysis.analysis2.one_short_negetive_detail}</p>
       </div>
     </div>
     <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[200px]">
       <div className="w-full min-h-[150px] flex flex-col items-center justify-center gap-5">
-        <p className='text-[50px] font-bold text-blue-500'>{specificanalysis.analysis3.numberinsight}</p>
+        <p className='text-[50px] text-blue-500'>{specificanalysis.analysis3.numberinsight}</p>
         <p>{specificanalysis.analysis3.one_short_random_detail}</p>
       </div>
     </div>
