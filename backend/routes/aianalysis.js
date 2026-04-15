@@ -48,6 +48,8 @@ const model = genAI.getGenerativeModel({
       4. "overallanalysis": A summary of the findings.
       5. "title": A short title for the chart
       6. "specificanalysis": 3 analysis point in json format {analysis1:{numberinsight,one_short_positive_detail}, analysis2:{numberinsight, one_short_negetive_detail}, analysis 3: {numberinsight, one_short_random_detail}}
+
+      numberinsight should be a number only
     `;
 
     const result = await model.generateContent(prompt);

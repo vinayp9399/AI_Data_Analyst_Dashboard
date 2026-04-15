@@ -28,6 +28,7 @@ const [isloading, setisloading] = useState(false)
 
 const analyseData = ()=>{
   setisloading(true)
+  setaidataAvailable(false)
   axios.post('http://localhost:5000/data/analysis', {userquery:userquery, charttype:chartoption}).then((res)=>{
      console.log(res.data)
      setvalues(res.data.analysis.values)
@@ -56,40 +57,55 @@ useEffect(()=>{
   return (
     <>
     <Navbar/>
+<div className='flex'>
+<aside className="hidden sm:flex flex-col w-64 h-[88vh] bg-gray-50 border-r border-gray-300">
+  <div className="p-6">
+    <h2 className="text-xl font-bold text-gray-800">Dashboard</h2>
+  </div>
 
-<div className="p-4">
-      {/* Mobile Dropdown (Visible < 640px) */}
-      <div className="sm:hidden">
-        <label htmlFor="tabs" className="sr-only">Select a tab</label>
-        <select 
-          id="tabs" 
-          className="block w-full px-3 py-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 shadow-sm"
-        >
-          <option onClick={()=>{settab('csv')}}>Input CSV Data</option>
-          <option onClick={()=>{settab('analysis')}}>Analysis</option>
-        </select>
-      </div>
+  <nav className="flex-1 px-4 space-y-2">
+    {/* Tab: CSV Input */}
+    <button
+      onClick={() => settab('csv')}
+      className={`w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors 
+        ${tab === 'csv' 
+          ? 'bg-blue-600 text-white shadow-md' 
+          : 'text-gray-700 hover:bg-gray-200'}`}
+    >
+      <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+      Input CSV Data
+    </button>
 
-      {/* Desktop Tabs (Visible > 640px) */}
-      <ul className="hidden text-sm font-medium text-center text-gray-500 sm:flex -space-x-px border border-gray-500 rounded-lg overflow-hidden mt-5 ml-5 mr-5">
-        <li className="w-full">
-          <a onClick={()=>{settab('csv')}} className={`inline-block w-full p-4 border-r border-gray-500 hover:bg-blue-400 hover:text-white focus:outline-none cursor-pointer ${tab==="csv" ? 'bg-blue-700 text-white' : 'bg-white'}`}>
-            Input CSV Data
-          </a>
-        </li>
-        <li className="w-full">
-          <a onClick={()=>{settab('analysis')}} className={`inline-block w-full p-4 border-l border-gray-500 hover:bg-blue-400 hover:text-white cursor-pointer ${tab==="analysis" ? 'bg-blue-700 text-white' : 'bg-white'}`}>
-            Analysis
-          </a>
-        </li>
-      </ul>
+    {/* Tab: Analysis */}
+    <button
+      onClick={() => settab('analysis')}
+      className={`w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors 
+        ${tab === 'analysis' 
+          ? 'bg-blue-600 text-white shadow-md' 
+          : 'text-gray-700 hover:bg-gray-200'}`}
+    >
+      <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+      </svg>
+      Analysis
+    </button>
+  </nav>
+
+  {/* Optional Footer Section */}
+  <div className="p-4 border-t border-gray-200">
+    <div className="flex items-center text-xs text-gray-500">
+      AI Analysis
     </div>
+  </div>
+</aside>
 
 
 
      {/* Optimized Preview Table */}
       {tab==='csv' && (
-        <div className="px-10 pb-20">
+        <div className="px-10 pt-10 w-full">
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg border border-gray-200 max-h-[400px]">
             <table className="w-full text-sm text-left text-gray-500">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0 shadow-sm">
@@ -119,12 +135,12 @@ useEffect(()=>{
 
       {tab==='analysis' && (
         <>
-        <div className="px-10 pb-20">
+        <div className="w-full overflow-y-auto h-[88vh]">
   {/* Main Grid Container */}
-  <div className="grid grid-cols-3 gap-6 items-start shadow-md sm:rounded-lg border border-gray-200 p-6 bg-gray-50">
+  <div className="grid grid-cols-5 gap-6 items-start border border-gray-200 p-6 bg-gray-50">
     
     {/* Top Section: Inputs and Full-Width Button */}
-    <div className="col-span-3 flex flex-col gap-4 w-full">
+    <div className="col-span-5 flex flex-col gap-4 w-full">
       
       {/* Inputs Row */}
       <div className="flex flex-col md:flex-row gap-4 w-full">
@@ -162,26 +178,39 @@ useEffect(()=>{
     </div>
 
     {isloading===true && aidataAvailable===false && <>
-    <div class="col-span-3 w-full mx-auto shadow-sm border border-gray-100 rounded p-4">
+    <div class="col-span-5 w-full mx-auto shadow-sm border border-gray-100 rounded p-4">
   <div class="flex animate-pulse space-x-4">
-    <div class="flex-1 size-80 bg-gray-300"></div>
+    <div class="flex-2 size-80 bg-gray-300"></div>
+    <div><div class='flex gap-2'>
     <div class="flex-1 space-y-6 py-1">
-      <div class="h-3 rounded bg-gray-300"></div>
-      <div class="h-3 rounded bg-gray-300"></div>
-      <div class="h-3 rounded bg-gray-300"></div>
-      <div class="h-3 rounded bg-gray-300"></div>
-      <div class="h-3 rounded bg-gray-300"></div>
-      <div class="h-3 rounded bg-gray-300"></div>
-      <div class="h-3 rounded bg-gray-300"></div>
-      <div class="h-3 rounded bg-gray-300"></div>
-      <div class="h-3 rounded bg-gray-300"></div>
+      <div class="flex-2 size-40 bg-gray-300"></div>
     </div>
-  </div>
+    <div class="flex-1 space-y-6 py-1 h-30">
+     <div class="flex-2 size-40 bg-gray-300"></div>
+    </div>
+    <div class="flex-1 space-y-6 py-1 h-30">
+      <div class="flex-2 size-40 bg-gray-300"></div>
+    </div>
+    </div>
+    <div class='mt-2'>
+      <div class='flex-1 space-y-2 py-1'>
+     <div class="h-3 rounded bg-gray-300"></div>
+      <div class="h-3 rounded bg-gray-300"></div>
+      <div class="h-3 rounded bg-gray-300"></div>
+      <div class="h-3 rounded bg-gray-300"></div>
+      <div class="h-3 rounded bg-gray-300"></div>
+      <div class="h-3 rounded bg-gray-300"></div>
+      <div class="h-3 rounded bg-gray-300"></div>
+      </div>
+    </div>
+    </div>
+    </div>
+  
 </div>
     </>}
 
     {aidataAvailable===false && isloading===false && <>
-    <div className="col-span-3 w-full bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[300px] flex items-center justify-center text-gray-500 text-center">
+    <div className="col-span-5 w-full bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[300px] flex items-center justify-center text-gray-500 text-center">
       <p className="italic">Analysis details will appear here...</p>
     </div>
     </>}
@@ -189,43 +218,51 @@ useEffect(()=>{
     
     {aidataAvailable===true && isloading===false && <>
 
-    <div className=" bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[200px]">
-      <div className="w-full min-h-[150px] flex flex-col items-center justify-center gap-5">
-        <p className='text-[50px] text-green-500'>{specificanalysis.analysis1.numberinsight}</p>
-        <p>{specificanalysis.analysis1.one_short_positive_detail}</p>
-      </div>
-    </div>
-    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[200px]">
-      <div className="w-full min-h-[150px] flex flex-col items-center justify-center gap-5">
-        <p className='text-[50px] text-red-500'>{specificanalysis.analysis2.numberinsight}</p>
-        <p>{specificanalysis.analysis2.one_short_negetive_detail}</p>
-      </div>
-    </div>
-    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[200px]">
-      <div className="w-full min-h-[150px] flex flex-col items-center justify-center gap-5">
-        <p className='text-[50px] text-blue-500'>{specificanalysis.analysis3.numberinsight}</p>
-        <p>{specificanalysis.analysis3.one_short_random_detail}</p>
-      </div>
-    </div>
+    
     {/* Bottom Left: Chart */}
-    <div className="col-span-2 bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[300px]">
+    <div className="col-span-2 row-span-2 bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[100px]">
       <div className="w-full h-full flex items-center justify-center">
         {chartoption==='Bar' && <>
+        <div className='w-full'>
         <BarChart labels={labels} values={values} valueDescription={valueDescription} title={title}/>
+        </div>
         </>}
         {chartoption==='Line' && <>
+        <div className='w-full'>
         <LineChart labels={labels} values={values} valueDescription={valueDescription} title={title}/>
+        </div>
         </>}
         {chartoption==='Circle' && <>
+        <div className='w-full'>
         <PieChart labels={labels} values={values} valueDescription={valueDescription} title={title}/>
+        </div>
         </>}
       </div>
     </div>
 
+    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 h-full">
+      <div className="w-full min-h-[50px] flex flex-col items-center justify-center gap-2">
+        <p className='text-[35px] text-green-500 font-bold'>{specificanalysis.analysis1.numberinsight}</p>
+        <p className='text-[10px]'>{specificanalysis.analysis1.one_short_positive_detail}</p>
+      </div>
+    </div>
+    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 h-full">
+      <div className="w-full min-h-[50px] flex flex-col items-center justify-center gap-2">
+        <p className='text-[35px] text-red-500 font-bold'>{specificanalysis.analysis2.numberinsight}</p>
+        <p className='text-[10px]'>{specificanalysis.analysis2.one_short_negetive_detail}</p>
+      </div>
+    </div>
+    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 h-full">
+      <div className="w-full min-h-[50px] flex flex-col items-center justify-center gap-2">
+        <p className='text-[35px] text-blue-500 font-bold'>{specificanalysis.analysis3.numberinsight}</p>
+        <p className='text-[10px]'>{specificanalysis.analysis3.one_short_random_detail}</p>
+      </div>
+    </div>
+
     {/* Bottom Right: Content */}
-    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[300px] flex flex-col gap-5 items-center justify-center text-black text-center">
-      <p className='text-[20px] font-bold'>Overall Analysis-</p>
-      <p className="italic">{overallanalysis}</p>
+    <div className="col-span-3 h-full bg-white p-4 rounded-lg shadow-sm border border-gray-100 min-h-[50px] flex flex-col gap-2 items-center justify-center text-black text-center">
+      <p className='text-[15px] font-bold'>Overall Analysis</p>
+      <p className="text-[15px] italic">{overallanalysis}</p>
     </div>
     </>}
     
@@ -234,6 +271,7 @@ useEffect(()=>{
         </>
         
       )}
+      </div>
     </>
   )
 }
