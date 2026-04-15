@@ -1,6 +1,8 @@
 ## AI Data Analyst Dashboard
 An AI-powered web application that allows users to upload datasets and extract insights using Natural Language. Instead of writing complex SQL queries or manually creating Excel charts, users can simply "ask" their data questions and receive instant visualizations and summaries.
 
+Live project Link- https://ai-data-analyst-dashboard-dusky.vercel.app/
+
 ## Aim of the Project
 The primary goal is to democratize data analysis. By combining Generative AI with data visualization, this dashboard enables non-technical users (marketing, sales, HR) to perform complex data exploration without needing to know Python, SQL, or advanced Excel.
 
