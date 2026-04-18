@@ -13,7 +13,6 @@ app.use(cors({
   credentials: true
 }));
 
-
 app.use(bodyParser.json())
 
 app.use('/file', require('./routes/fileuploadroute'))
