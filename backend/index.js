@@ -5,7 +5,15 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 
 const app = express()
-app.use(cors())
+// app.use(cors())
+
+app.use(cors({
+  origin: 'https://ai-data-analyst-dashboard-dusky.vercel.app',
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
+
+
 app.use(bodyParser.json())
 
 app.use('/file', require('./routes/fileuploadroute'))
