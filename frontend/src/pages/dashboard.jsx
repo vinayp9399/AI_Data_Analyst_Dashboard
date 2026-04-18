@@ -29,7 +29,7 @@ const [isloading, setisloading] = useState(false)
 const analyseData = ()=>{
   setisloading(true)
   setaidataAvailable(false)
-  axios.post('https://ai-data-analyst-dashboard-backend.vercel.app/data/analysis', {userquery:userquery, charttype:chartoption}).then((res)=>{
+  axios.post('https://ai-data-analyst-dashboard-backend.onrender.com/data/analysis', {userquery:userquery, charttype:chartoption}).then((res)=>{
      console.log(res.data)
      setvalues(res.data.analysis.values)
      setlabels(res.data.analysis.labels)
@@ -44,7 +44,7 @@ const analyseData = ()=>{
 
 useEffect(()=>{
   const handleshowData=()=>{
-     axios.get('https://ai-data-analyst-dashboard-backend.vercel.app/file/getfile').then((res)=>{
+     axios.get('https://ai-data-analyst-dashboard-backend.onrender.com/file/getfile').then((res)=>{
        console.log(res.data)
         setColumns(res.data.columns);
         setData(res.data.data);
