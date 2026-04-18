@@ -49,7 +49,7 @@ function Uploadfile() {
 
     try {
       setStatus("Uploading...");
-      const response = await axios.post('http://localhost:5000/file/upload', formData, {
+      const response = await axios.post('https://ai-data-analyst-dashboard-backend.vercel.app/file/upload', formData, {
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round(
             (progressEvent.loaded * 100) / progressEvent.total
